@@ -48,14 +48,21 @@ function Home() {
   const focus = lastSession && focusMaterial
     ? { examId: lastSession.examId, subtestId: lastSession.subtestId, materialId: lastSession.materialId, name: focusMaterial.name }
     : todaysFocus;
-  const qCount = getQuestions().length;
+  const qCount = focusMaterial?.questionCount ?? todaysFocus.questions;
+  const qMinutes = focusMaterial?.minutes ?? todaysFocus.minutes;
   const hour = new Date().getHours();
   const greeting = hour < 11 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 
   return (
     <Screen>
       <header className="mb-6">
-        <p className="text-[15px] font-semibold tracking-[-0.02em]">Fundamental<span className="text-primary">.</span></p>
+        <p className="flex items-center text-[15px] font-semibold tracking-[-0.02em]">
+          Fundamental
+          <span className="relative ml-0.5 inline-flex size-2 items-center justify-center" aria-hidden="true">
+            <span className="absolute inset-[-3px] rounded-full bg-primary/15" />
+            <span className="relative size-1.5 rounded-full bg-primary" />
+          </span>
+        </p>
         <h1 className="mt-4 text-[27px] font-semibold tracking-[-0.02em]" suppressHydrationWarning>
           {greeting}, {user.name}.
         </h1>
