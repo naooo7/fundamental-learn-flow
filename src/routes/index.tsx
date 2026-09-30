@@ -56,11 +56,11 @@ function Home() {
   return (
     <Screen>
       <header className="mb-6">
-        <p className="flex items-center text-[15px] font-semibold tracking-[-0.02em]">
+        <p className="flex items-baseline text-[15px] font-semibold tracking-[-0.02em]">
           Fundamental
-          <span className="relative ml-0.5 inline-flex size-2 items-center justify-center" aria-hidden="true">
-            <span className="absolute inset-[-3px] rounded-full bg-primary/15" />
-            <span className="relative size-1.5 rounded-full bg-primary" />
+          <span className="relative ml-[3px] inline-block size-[5px]" aria-hidden="true">
+            <span className="absolute -inset-[3px] rounded-full bg-primary/15" />
+            <span className="absolute inset-0 rounded-full bg-primary" />
           </span>
         </p>
         <h1 className="mt-4 text-[27px] font-semibold tracking-[-0.02em]" suppressHydrationWarning>
