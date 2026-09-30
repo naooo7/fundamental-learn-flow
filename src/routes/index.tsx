@@ -54,7 +54,42 @@ function Home() {
         <p className="mt-1 text-sm text-muted-foreground">Preparing for {user.target}</p>
       </header>
 
-      <section className="rounded-xl border border-border bg-surface p-4 shadow-soft">
+      {data && attempts.length > 0 ? (
+        <section className="pt-1">
+          <div className="flex items-baseline justify-between">
+            <p className="label-xs">This Week</p>
+            <Link to="/progress" className="text-[13px] text-primary">Details</Link>
+          </div>
+          <div className="mt-3 grid grid-cols-3 gap-3">
+            <Stat value={String(ws.total)} label="Questions" />
+            <Stat value={ws.total ? `${ws.accuracy}%` : "—"} label="Accuracy" />
+            <Stat value={ws.total ? formatDuration(ws.timeMs) : "—"} label="Study time" />
+          </div>
+          <div className="mt-4 flex items-end justify-between gap-2">
+            {week.days.map((d) => (
+              <div key={d.key} className="flex flex-1 flex-col items-center gap-1.5">
+                <span className="tabular text-[10px] text-muted-foreground">{d.count || ""}</span>
+                <div
+                  className={`w-full rounded-sm ${d.count ? "bg-primary" : "bg-border"}`}
+                  style={{ height: `${d.count ? 6 + (d.count / max) * 42 : 3}px` }}
+                />
+                <span className={`text-[11px] ${d.isToday ? "font-semibold text-foreground" : "text-muted-foreground"}`}>
+                  {d.label}
+                </span>
+              </div>
+            ))}
+          </div>
+        </section>
+      ) : data ? (
+        <section className="mt-6 border-y border-border py-8 text-center">
+          <p className="text-[15px] font-medium">No activity yet</p>
+          <p className="mt-1 text-[13px] text-muted-foreground">
+            Complete your first practice session to see your progress.
+          </p>
+        </section>
+      ) : null}
+
+      <section className="mt-6 rounded-xl border border-border bg-surface p-4 shadow-soft">
         <p className="label-xs">{lastSession ? "Continue" : "Suggested start"}</p>
         <p className="mt-2 text-lg font-medium tracking-[-0.015em]">{focus.name}</p>
         <p className="tabular mt-0.5 text-[13px] text-muted-foreground">{qCount} questions</p>
@@ -92,40 +127,7 @@ function Home() {
               <span className="rounded-lg border border-border-strong px-3 py-1.5 text-[13px] font-medium">Review</span>
             </div>
           </Link>
-
-          <section className="pt-5">
-            <div className="flex items-baseline justify-between">
-              <p className="label-xs">This Week</p>
-              <Link to="/progress" className="text-[13px] text-primary">Details</Link>
-            </div>
-            <div className="mt-3 grid grid-cols-3 gap-3">
-              <Stat value={String(ws.total)} label="Questions" />
-              <Stat value={ws.total ? `${ws.accuracy}%` : "—"} label="Accuracy" />
-              <Stat value={ws.total ? formatDuration(ws.timeMs) : "—"} label="Study time" />
-            </div>
-            <div className="mt-4 flex items-end justify-between gap-2">
-              {week.days.map((d) => (
-                <div key={d.key} className="flex flex-1 flex-col items-center gap-1.5">
-                  <span className="tabular text-[10px] text-muted-foreground">{d.count || ""}</span>
-                  <div
-                    className={`w-full rounded-sm ${d.count ? "bg-primary" : "bg-border"}`}
-                    style={{ height: `${d.count ? 6 + (d.count / max) * 42 : 3}px` }}
-                  />
-                  <span className={`text-[11px] ${d.isToday ? "font-semibold text-foreground" : "text-muted-foreground"}`}>
-                    {d.label}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </section>
         </>
-      ) : data ? (
-        <section className="mt-6 border-y border-border py-8 text-center">
-          <p className="text-[15px] font-medium">No activity yet</p>
-          <p className="mt-1 text-[13px] text-muted-foreground">
-            Complete your first practice session to see your progress.
-          </p>
-        </section>
       ) : null}
     </Screen>
   );
