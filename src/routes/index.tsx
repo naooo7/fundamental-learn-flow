@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Flame } from "lucide-react";
 import { Screen } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { findMaterial, getQuestions, todaysFocus, user } from "@/data/prototype";
@@ -62,8 +63,8 @@ function Home() {
       </header>
 
       <section className="mb-5 flex min-h-11 items-center justify-between gap-3 border-y border-border py-2.5" aria-label="Streak">
-        <p className="shrink-0 text-[14px] font-medium">
-          <span aria-hidden="true">🔥 </span>{days ? `${days} day${days === 1 ? "" : "s"} streak` : "No streak yet"}
+        <p className="flex shrink-0 items-center gap-1.5 text-[14px] font-medium">
+          <Flame aria-hidden="true" className="size-4 text-primary" />{days ? `${days} day${days === 1 ? "" : "s"} streak` : "No streak yet"}
         </p>
         <p className="text-right text-[13px] text-muted-foreground">{days ? "Keep it going!" : "Start today."}</p>
       </section>
