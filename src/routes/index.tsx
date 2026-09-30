@@ -128,13 +128,6 @@ function Home() {
             </div>
           </Link>
         </>
-      ) : data ? (
-        <section className="mt-6 border-y border-border py-8 text-center">
-          <p className="text-[15px] font-medium">No activity yet</p>
-          <p className="mt-1 text-[13px] text-muted-foreground">
-            Complete your first practice session to see your progress.
-          </p>
-        </section>
       ) : null}
     </Screen>
   );
