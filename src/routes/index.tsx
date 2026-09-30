@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Flame } from "lucide-react";
 import { Screen } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
-import { findMaterial, getQuestions, todaysFocus, user } from "@/data/prototype";
+import { findMaterial, todaysFocus, user } from "@/data/prototype";
 import { dayKey, formatDuration, needsReview, streak, summarize, useActivity } from "@/lib/activity";
 
 export const Route = createFileRoute("/")({
@@ -48,14 +48,21 @@ function Home() {
   const focus = lastSession && focusMaterial
     ? { examId: lastSession.examId, subtestId: lastSession.subtestId, materialId: lastSession.materialId, name: focusMaterial.name }
     : todaysFocus;
-  const qCount = getQuestions().length;
+  const qCount = focusMaterial?.questionCount ?? todaysFocus.questions;
+  const qMinutes = focusMaterial?.minutes ?? todaysFocus.minutes;
   const hour = new Date().getHours();
   const greeting = hour < 11 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 
   return (
     <Screen>
       <header className="mb-6">
-        <p className="text-[15px] font-semibold tracking-[-0.02em]">Fundamental<span className="text-primary">.</span></p>
+        <p className="flex items-baseline text-[15px] font-semibold tracking-[-0.02em]">
+          Fundamental
+          <span className="relative ml-[3px] inline-block size-[5px]" aria-hidden="true">
+            <span className="absolute -inset-[3px] rounded-full bg-primary/15" />
+            <span className="absolute inset-0 rounded-full bg-primary" />
+          </span>
+        </p>
         <h1 className="mt-4 text-[27px] font-semibold tracking-[-0.02em]" suppressHydrationWarning>
           {greeting}, {user.name}.
         </h1>
@@ -124,7 +131,7 @@ function Home() {
       <section className="mt-4 rounded-xl border border-border bg-surface p-4 shadow-soft">
         <p className="label-xs">{lastSession ? "Continue" : "Suggested start"}</p>
         <p className="mt-2 text-lg font-medium tracking-[-0.015em]">{focus.name}</p>
-        <p className="tabular mt-0.5 text-[13px] text-muted-foreground">{qCount} questions</p>
+        <p className="tabular mt-0.5 text-[13px] text-muted-foreground">{qCount} questions · ~{qMinutes} min</p>
         <Button asChild size="block" className="mt-4">
           <Link
             to="/practice/$examId/$subtestId/$materialId"
