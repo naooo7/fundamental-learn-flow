@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Flame } from "lucide-react";
 import { Screen } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
-import { findMaterial, getQuestions, todaysFocus, user } from "@/data/prototype";
+import { findMaterial, todaysFocus, user } from "@/data/prototype";
 import { dayKey, formatDuration, needsReview, streak, summarize, useActivity } from "@/lib/activity";
 
 export const Route = createFileRoute("/")({
@@ -131,7 +131,7 @@ function Home() {
       <section className="mt-4 rounded-xl border border-border bg-surface p-4 shadow-soft">
         <p className="label-xs">{lastSession ? "Continue" : "Suggested start"}</p>
         <p className="mt-2 text-lg font-medium tracking-[-0.015em]">{focus.name}</p>
-        <p className="tabular mt-0.5 text-[13px] text-muted-foreground">{qCount} questions</p>
+        <p className="tabular mt-0.5 text-[13px] text-muted-foreground">{qCount} questions · ~{qMinutes} min</p>
         <Button asChild size="block" className="mt-4">
           <Link
             to="/practice/$examId/$subtestId/$materialId"
